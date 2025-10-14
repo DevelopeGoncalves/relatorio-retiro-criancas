@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Retiro das Crianças</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        }
+
+        .team-header {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .team-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .team-header .leader {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .verde { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .amarelo { background: linear-gradient(135deg, #f7971e, #ffd200); }
+        .azul { background: linear-gradient(135deg, #2193b0, #6dd5ed); }
+        .branca { background: linear-gradient(135deg, #e0e0e0, #ffffff); color: #333 !important; }
+        .laranja { background: linear-gradient(135deg, #ff6b35, #ff9068); }
+        .vermelha { background: linear-gradient(135deg, #eb3349, #f45c43); }
+
+        .children-list {
+            list-style: none;
+        }
+
+        .children-list li {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.2s ease;
+        }
+
+        .children-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .verde li { border-left-color: #11998e; }
+        .amarelo li { border-left-color: #f7971e; }
+        .azul li { border-left-color: #2193b0; }
+        .branca li { border-left-color: #666; }
+        .laranja li { border-left-color: #ff6b35; }
+        .vermelha li { border-left-color: #eb3349; }
+
+        .child-name {
+            font-weight: 600;
+            color: #333;
+            margin-right: 10px;
+        }
+
+        .child-age {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .summary {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .summary h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .edit-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+
+        .edit-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .edit-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Retiro das Crianças Soldadinho de Cristo 2025</h1>
+            <p>Divisão das Equipes por Cores</p>
+        </div>
+        <div class="teams-grid" id="teamsGrid"></div>
+
+        <div class="summary">
+            <h3>Resumo Geral</h3>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTeams">6</div>
+                    <div class="stat-label">Equipes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalChildren">60</div>
+                    <div class="stat-label">Crianças</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="avgAge">8</div>
+                    <div class="stat-label">Idade Média</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const teams = {
+            verde: {
+                name: "Equipe Verde",
+                leader: "Líder: Brenda  - Douglas - Iandra",
+                color: "verde",
+                children: [
+                    { name: "Hyslla Rodrigues Souza ", age: 11 },
+                    { name: "Aline Oliveira Santos", age: 11 },
+                    { name: "Heloísa costa pereira", age: 11 },
+                    { name: "Eduardo - Mãe ( Júlia )", age: 11 },
+                    { name: "Ítalo Tiago Rodrigues", age: 10 },
+                    { name: "Davi Santana dos Santos", age: 10 },
+                    { name: "Maria Eduarda Santos da Silva", age: 10 },
+                    { name: "Isabelly Rodrigues Vieira", age: 9 },
+                    { name: "Smith Oliveira Martinelli", age: 9 },
+                    { name: "Lyvia Severo", age: 9 }
+                ]
+            },
+            amarelo: {
+                name: "Equipe Amarela",
+                leader: "Líder:  Ana Beatriz - Davi - Elaine - Luiza",
+                color: "amarelo",
+                children: [
+                    { name: "Lorena Jacob cardoso", age: 11 },
+                    { name: "Sophia Lopes dos Santos ", age: 11 },
+                    { name: "Bernardo Netto Batista", age: 11 },
+                    { name: "Kauã Santos Lyrio", age: 10 },
+                    { name: "Nicole Santos Costa", age: 10 },
+                    { name: "Pedro Lucas Flores ", age: 10 },
+                    { name: "Laura Coutinho dos Santos ", age: 10 },
+                    { name: "Yorrana oliveira Martinelli", age: 10 },
+                    { name: "Isaac da Silva rosa", age: 9 },
+                    { name: "Alypher Nogueira", age: 9 }
+                ]
+            },
+            azul: {
+                name: "Equipe Azul",
+                leader: "Líder: Ana Paula - Kauã - Rose Jadyvsky",
+                color: "azul",
+                children: [
+                    { name: "Yasmim da Silva Almeida", age: 10 },
+                    { name: "João Miguel Oliveira", age: 9 },
+                    { name: "Davi Bianqui Santos", age: 8 },
+                    { name: "Sophia Reis", age: 8 },
+                    { name: "Heitor André Oliveira Jadyvsky", age: 6 },
+                    { name: "Maite Souza Correa", age: 6 },
+                    { name: "Samuel Borges dos Santos", age: 6 },
+                    { name: "Lauren Victoria Favacho Precioso", age: 6 },
+                    { name: "Elisa Lourenço Queiroz", age: 5 },
+                    { name: "Helena Pimenta Ferreira", age: 5 }
+                ]
+            },
+            branca: {
+                name: "Equipe Branca",
+                leader: "Líder: Brunara - Max - Mirian",
+                color: "branca",
+                children: [
+                    { name: "Pedro Felipe Silva", age: 11 },
+                    { name: "Dalila Martinelli Rocha", age: 11 },
+                    { name: "Ithalo Dias da Silva", age: 11 },
+                    { name: "Kauany Vitoria Chagas", age: 10 },
+                    { name: "Kemelly Novais Santana", age: 10 },
+                    { name: "Valentina Ramos Viana", age: 10 },
+                    { name: "Ana Luiza Charpinel", age: 10 },
+                    { name: "Ysabella Ferreira Loreiro", age: 10 },
+                    { name: "Matheus de Oliveira Barbosa", age: 10 },
+                    { name: "Saulo Vicente Medeiros", age: 9 }
+                ]
+            },
+            laranja: {
+                name: "Equipe Laranja",
+                leader: "Líder: Mikaeli - PH - Marilene  - Alberto",
+                color: "laranja",
+                children: [
+                    { name: "Pietra Almeida Vidal", age: 9 },
+                    { name: "Vicente de Oliveira Moura", age: 8 },
+                    { name: "Wendry Bnahos Gonçalves", age: 8 },
+                    { name: "Kaylane Anastácio Miranda ", age: 8 },
+                    { name: "Liz Santos Pacheco", age: 7 },
+                    { name: "Isabela dos Santos Brum", age: 7 },
+                    { name: "José Luiz", age: 6 },
+                    { name: "Heitor Bicalho", age: 6 },
+                    { name: "Tiffany Maria Ramos", age: 5 },
+                    { name: "Thainar Vitoria Nogueira", age: 5 }
+                ]
+            },
+            vermelha: {
+                name: "Equipe Vermelha",
+                leader: "Líder: Ana Vitória - Luiz Felipe - Jussimere - Wagna",
+                color: "vermelha",
+                children: [
+                    { name: "Lavinia Souza Correia", age: 9 },
+                    { name: "Arthur de Oliveira Barbosa", age: 8 },
+                    { name: "Theo Ramos de Gois", age: 8 },
+                    { name: "Emanuelly Almeida de Souza", age: 7 },
+                    { name: "Ana luiza jacob", age: 6 },
+                    { name: "Murilo Santana de Gpois", age: 6 },
+                    { name: "Bryan Anacleto", age: 6 },
+                    { name: "Vitória Victorio", age: 7 },
+                    { name: "Helena Meneguite Crivelare", age: 6 },
+                    { name: "Heitor - Mãe ( Júlia )", age: 6 }
+                ]
+            }
+        };
+
+        function renderTeams() {
+            const grid = document.getElementById('teamsGrid');
+            grid.innerHTML = '';
+
+            for (const [key, team] of Object.entries(teams)) {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+                
+                card.innerHTML = `
+                    <div class="team-header ${team.color}">
+                        <h2>${team.name}</h2>
+                        <div class="leader">${team.leader}</div>
+                    </div>
+                    <ul class="children-list ${team.color}">
+                        ${team.children.map(child => `
+                            <li>
+                                <span class="child-name">${child.name}</span>
+                                <span class="child-age">${child.age} anos</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                
+                grid.appendChild(card);
+            }
+
+            updateStats();
+        }
+
+        function updateStats() {
+            let totalChildren = 0;
+            let totalAge = 0;
+
+            for (const team of Object.values(teams)) {
+                totalChildren += team.children.length;
+                totalAge += team.children.reduce((sum, child) => sum + child.age, 0);
+            }
+
+            document.getElementById('totalChildren').textContent = totalChildren;
+            document.getElementById('avgAge').textContent = Math.round(totalAge / totalChildren);
+        }
+
+        function addChild() {
+            const teamKey = document.getElementById('teamSelect').value;
+            const name = document.getElementById('childName').value.trim();
+            const age = parseInt(document.getElementById('childAge').value);
+
+            if (!name || !age || age < 5 || age > 11) {
+                alert('Por favor, preencha todos os campos corretamente!');
+                return;
+            }
+
+            teams[teamKey].children.push({ name, age });
+            
+            document.getElementById('childName').value = '';
+            document.getElementById('childAge').value = '';
+            
+            renderTeams();
+        }
+
+        renderTeams();
+    </script>
+</body>
+</html>
