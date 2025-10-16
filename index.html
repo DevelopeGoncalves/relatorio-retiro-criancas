@@ -332,6 +332,7 @@
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('equipes')">👥 Equipes</button>
             <button class="tab-button" onclick="showTab('cronograma')">📅 Cronograma</button>
+            <button class="tab-button" onclick="showTab('cardapio', this)">🍲 Cardápio</button>
         </div>
 
         <div id="equipes" class="tab-content active">
@@ -572,6 +573,102 @@
         </div>
     </div>
 
+    <div id="cardapio" class="tab-content">
+        <div class="schedule-container">
+            <div class="schedule-header">
+                <h2>🍲 Cardápio do 9º Retiro de Crianças</h2>
+                <p>Alimentação completa para os 3 dias</p>
+            </div>
+    
+            <div class="schedule-day">
+                <div class="day-header">
+                    <h3>🌙 Sexta-feira - Jantar</h3>
+                </div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <div class="time">Noite</div>
+                        <div class="activity">
+                            <h4>Jantar de Boas-Vindas</h4>
+                            <p>Canjiquinha com linguiça, feijão de caldo, frutas e suco.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="schedule-day">
+                <div class="day-header">
+                    <h3>☀️ Sábado - Dia Todo</h3>
+                </div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <div class="time">Manhã</div>
+                        <div class="activity">
+                            <h4>Café da Manhã</h4>
+                            <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">10:30</div>
+                        <div class="activity">
+                            <h4>Lanche da Manhã</h4>
+                            <p>Frutas, bolo e suco.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">Almoço</div>
+                        <div class="activity">
+                            <h4>Almoço Completo</h4>
+                            <p>Carne de boi ensopada, arroz branco, feijão de caldo, purê de batata, salada e suco.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">Tarde</div>
+                        <div class="activity">
+                            <h4>Lanche da Tarde e Jantar Simples</h4>
+                            <p>Arroz branco, feijão de caldo, macarrão e carne moída. (O lanche simples foi integrado)</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">Festa</div>
+                        <div class="activity">
+                            <h4>Cardápio da Festa</h4>
+                            <p>Cachorro quente, pizza, açaí e suco.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="schedule-day">
+                <div class="day-header">
+                    <h3>🙏 Domingo - Encerramento</h3>
+                </div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <div class="time">Manhã</div>
+                        <div class="activity">
+                            <h4>Café da Manhã</h4>
+                            <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">10:30</div>
+                        <div class="activity">
+                            <h4>Lanche da Manhã</h4>
+                            <p>Frutas, bolo e suco.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="time">Almoço</div>
+                        <div class="activity">
+                            <h4>Almoço de Despedida</h4>
+                            <p>Frango ensopado, macarrão, polenta, salada, suco e frutas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <script>
         const teams = {
             verde: {
