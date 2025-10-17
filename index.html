@@ -48,6 +48,7 @@
             gap: 10px;
             margin-bottom: 30px;
             justify-content: center;
+            flex-wrap: wrap; /* Adicionado para responsividade nos botões */
         }
 
         .tab-button {
@@ -60,6 +61,7 @@
             font-size: 1.1em;
             font-weight: 600;
             transition: all 0.3s ease;
+            white-space: nowrap; /* Evita quebras de linha nos botões */
         }
 
         .tab-button:hover {
@@ -240,13 +242,22 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+        
+        /* Estilo especial para o cabeçalho de Restrições */
+        .restrictions-header {
+            background: linear-gradient(135deg, #dc3545, #fd7e14); /* Gradiente de Alerta */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
         .day-header h3 {
             font-size: 1.5em;
         }
 
         .schedule-items {
-            padding-left: 20px;
+            padding-left: 0; /* Removido padding para lista de restrições */
         }
 
         .schedule-item {
@@ -258,7 +269,18 @@
             border-radius: 10px;
             border-left: 4px solid #667eea;
             transition: all 0.3s ease;
+            align-items: flex-start; /* Alinha itens no topo */
         }
+        
+        /* Estilo para item de restrição/orientação */
+        .restriction-item {
+            border-left-color: #dc3545; /* Cor de alerta */
+        }
+        
+        .restriction-item .time {
+             color: #dc3545;
+        }
+
 
         .schedule-item:hover {
             background: #e9ecef;
@@ -271,6 +293,19 @@
             font-weight: bold;
             color: #667eea;
             min-width: 80px;
+        }
+        
+        .restriction-item .time {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333; /* Cor mais neutra */
+            min-width: 100px;
+        }
+        
+        .restriction-item .activity h4 {
+            color: #dc3545; /* Cor vermelha para o título da restrição */
+            margin-bottom: 5px;
+            font-size: 1.2em;
         }
 
         .schedule-item .activity {
@@ -330,9 +365,10 @@
         </div>
 
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('equipes')">👥 Equipes</button>
-            <button class="tab-button" onclick="showTab('cronograma')">📅 Cronograma</button>
-            <button class="tab-button" onclick="showTab('cardapio', this)">🍲 Cardápio</button>
+            <button class="tab-button active" onclick="showTab(event, 'equipes')">👥 Equipes</button>
+            <button class="tab-button" onclick="showTab(event, 'cronograma')">📅 Cronograma</button>
+            <button class="tab-button" onclick="showTab(event, 'cardapio')">🍲 Cardápio</button>
+            <button class="tab-button" onclick="showTab(event, 'restricoes')">🛑 Restrições do Local</button>
         </div>
 
         <div id="equipes" class="tab-content active">
@@ -346,7 +382,7 @@
                         <div class="stat-label">Equipes</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" id="totalChildren">62</div>
+                        <div class="stat-number" id="totalChildren">69</div>
                         <div class="stat-label">Crianças</div>
                     </div>
                     <div class="stat-item">
@@ -571,104 +607,181 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="cardapio" class="tab-content">
-        <div class="schedule-container">
-            <div class="schedule-header">
-                <h2>🍲 Cardápio do 9º Retiro de Crianças</h2>
-                <p>Alimentação completa para os 3 dias</p>
-            </div>
-    
-            <div class="schedule-day">
-                <div class="day-header">
-                    <h3>🌙 Sexta-feira - Jantar</h3>
+        <div id="cardapio" class="tab-content">
+            <div class="schedule-container">
+                <div class="schedule-header">
+                    <h2>🍲 Cardápio do 9º Retiro de Crianças</h2>
+                    <p>Alimentação completa para os 3 dias</p>
                 </div>
-                <div class="schedule-items">
-                    <div class="schedule-item">
-                        <div class="time">Noite</div>
-                        <div class="activity">
-                            <h4>Jantar de Boas-Vindas</h4>
-                            <p>Canjiquinha com linguiça, feijão de caldo, frutas e suco.</p>
+            
+                <div class="schedule-day">
+                    <div class="day-header">
+                        <h3>🌙 Sexta-feira - Jantar</h3>
+                    </div>
+                    <div class="schedule-items">
+                        <div class="schedule-item">
+                            <div class="time">Noite</div>
+                            <div class="activity">
+                                <h4>Jantar de Boas-Vindas</h4>
+                                <p>Canjiquinha com linguiça, feijão de caldo, frutas e suco.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    
-            <div class="schedule-day">
-                <div class="day-header">
-                    <h3>☀️ Sábado - Dia Todo</h3>
-                </div>
-                <div class="schedule-items">
-                    <div class="schedule-item">
-                        <div class="time">Manhã</div>
-                        <div class="activity">
-                            <h4>Café da Manhã</h4>
-                            <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
+            
+                <div class="schedule-day">
+                    <div class="day-header">
+                        <h3>☀️ Sábado - Dia Todo</h3>
+                    </div>
+                    <div class="schedule-items">
+                        <div class="schedule-item">
+                            <div class="time">Manhã</div>
+                            <div class="activity">
+                                <h4>Café da Manhã</h4>
+                                <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">10:30</div>
+                            <div class="activity">
+                                <h4>Lanche da Manhã</h4>
+                                <p>Frutas, bolo e suco.</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">Almoço</div>
+                            <div class="activity">
+                                <h4>Almoço Completo</h4>
+                                <p>Carne de boi ensopada, arroz branco, feijão de caldo, purê de batata, salada e suco.</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">Tarde</div>
+                            <div class="activity">
+                                <h4>Lanche da Tarde e Jantar Simples</h4>
+                                <p>Arroz branco, feijão de caldo, macarrão e carne moída. (O lanche simples foi integrado)</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">Festa</div>
+                            <div class="activity">
+                                <h4>Cardápio da Festa</h4>
+                                <p>Cachorro quente, pizza, açaí e suco.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="time">10:30</div>
-                        <div class="activity">
-                            <h4>Lanche da Manhã</h4>
+                </div>
+            
+                <div class="schedule-day">
+                    <div class="day-header">
+                        <h3>🙏 Domingo - Encerramento</h3>
+                    </div>
+                    <div class="schedule-items">
+                        <div class="schedule-item">
+                            <div class="time">Manhã</div>
+                            <div class="activity">
+                                <h4>Café da Manhã</h4>
+                                <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">10:30</div>
+                            <div class="activity">
+                                <h4>Lanche da Manhã</h4>
                             <p>Frutas, bolo e suco.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="time">Almoço</div>
-                        <div class="activity">
-                            <h4>Almoço Completo</h4>
-                            <p>Carne de boi ensopada, arroz branco, feijão de caldo, purê de batata, salada e suco.</p>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="time">Tarde</div>
-                        <div class="activity">
-                            <h4>Lanche da Tarde e Jantar Simples</h4>
-                            <p>Arroz branco, feijão de caldo, macarrão e carne moída. (O lanche simples foi integrado)</p>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="time">Festa</div>
-                        <div class="activity">
-                            <h4>Cardápio da Festa</h4>
-                            <p>Cachorro quente, pizza, açaí e suco.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="schedule-day">
-                <div class="day-header">
-                    <h3>🙏 Domingo - Encerramento</h3>
-                </div>
-                <div class="schedule-items">
-                    <div class="schedule-item">
-                        <div class="time">Manhã</div>
-                        <div class="activity">
-                            <h4>Café da Manhã</h4>
-                            <p>Pão com margarina, queijo e presunto, frutas, ovo mexido, banana cozida e achocolatado.</p>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="time">10:30</div>
-                        <div class="activity">
-                            <h4>Lanche da Manhã</h4>
-                            <p>Frutas, bolo e suco.</p>
-                        </div>
-                    </div>
-                    <div class="schedule-item">
-                        <div class="time">Almoço</div>
-                        <div class="activity">
-                            <h4>Almoço de Despedida</h4>
-                            <p>Frango ensopado, macarrão, polenta, salada, suco e frutas.</p>
+                        <div class="schedule-item">
+                            <div class="time">Almoço</div>
+                            <div class="activity">
+                                <h4>Almoço de Despedida</h4>
+                                <p>Frango ensopado, macarrão, polenta, salada, suco e frutas.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        
+        <div id="restricoes" class="tab-content">
+            <div class="schedule-container">
+                <div class="restrictions-header">
+                    <h2>🛑 Restrições e Orientações do Sítio da Flor</h2>
+                    <p>Nosso final de semana chegou! E para que tudo dê certo, contamos com vocês! Seguem algumas orientações importantes:</p>
+                </div>
+        
+                <div class="schedule-items">
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Regras Gerais</div>
+                        <div class="activity">
+                            <h4>Limpeza e Organização</h4>
+                            <p><strong>Lixo na lixeira, não jogar lixo no chão.</strong> Nos quartos e alojamentos, não joguem lixo no chão e sim nas lixeiras e ao final recolha o lixo dos banheiros e **deposite no local estabelecido**.</p>
+                            <p>A **cozinha** (e todos os utensílios, incluindo pratos, talheres, as panelas, paredes e piso) **precisa ser devolvida limpa** do mesmo jeito que entregamos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Estrutura</div>
+                        <div class="activity">
+                            <h4>Mobiliário e Decoração</h4>
+                            <p><strong>Proibido retirar a placa do Sítio da Flor do púlpito e colar painéis ou cartazes.</strong></p>
+                            <p>Não mexer na configuração dos móveis do salão de eventos; caso isto aconteça, **favor colocar tudo no seu lugar de origem**.</p>
+                            <p>Pedimos para que **não retirem os colchões** dos alojamentos e quartos e os leve para outros lugares.</p>
+                        </div>
+                    </div>
+        
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Segurança</div>
+                        <div class="activity">
+                            <h4>Cuidado com o Local</h4>
+                            <p>Cuidado ao passar roupas nos colchões, **risco de queimá-los**.</p>
+                            <p><strong>Proibido soltar bombas e rojões.</strong></p>
+                            <p>As plantas são lindas para ver, **não arranque galhos e flores**. Não tirem as frutas dos pés.</p>
+                            <p>Proibido brincadeiras com **tinta** em todo o sítio.</p>
+                            <p>Não jogar pedras ou qualquer outro objeto na fonte.</p>
+                            <p>Se começar a chover, pedimos que **retirem as redes e esteiras da área externa** para que não molhem.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Ar Condicionado</div>
+                        <div class="activity">
+                            <h4>Uso do Ar Condicionado</h4>
+                            <p><strong>Não mexam no ar condicionado</strong>, eles ligarão automaticamente às **21 horas e desligarão às 7 da manhã**.</p>
+                            <p>Se quiserem o ar condicionado ligado em toda a estadia por 24 horas, há uma **taxa extra no valor de R$ 1.000,00 (Um mil reais)**.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Piscina</div>
+                        <div class="activity">
+                            <h4>Regras da Piscina</h4>
+                            <p><strong>Não entre na piscina com creme no cabelo</strong>, passe na ducha antes de dar aquele "tchibum".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item restriction-item">
+                        <div class="time">Horário</div>
+                        <div class="activity">
+                            <h4>Silêncio e Saída</h4>
+                            <p>Pedimos que a partir das **22 horas diminuam o volume do som**, pois estamos na roça e muitos que moram ao redor acordam cedo para o trabalho rural.</p>
+                            <p>Lembrem-se que nosso horário de **saída é às 15 horas do domingo sem atrasos**.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-item">
+                        <div class="time">Permitido</div>
+                        <div class="activity">
+                            <h4>Liberado</h4>
+                            <p>Joguem bola nos campos.</p>
+                            <p>O sítio é de vocês, usem com carinho! Aproveitem…❤️ Marque a gente nas fotos para repostarmos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     <script>
         const teams = {
             verde: {
@@ -771,12 +884,27 @@
                     { name: "Vitória Victorio", age: 7 },
                     { name: "Ana luiza jacob", age: 6 },
                     { name: "Murilo Santana de Gpois", age: 6 },
-                    { name: "Bryan Anacleto", age: 6 },            
+                    { name: "Bryan Anacleto", age: 6 },           
                     { name: "Helena Meneguite Crivelare", age: 6 },
                     { name: "Heitor - Mãe ( Júlia )", age: 6 }
                 ]
             }
         };
+
+        function calculateAvgAge(teamsData) {
+            let totalChildren = 0;
+            let totalAge = 0;
+
+            for (const team of Object.values(teamsData)) {
+                totalChildren += team.children.length;
+                totalAge += team.children.reduce((sum, child) => sum + child.age, 0);
+            }
+            
+            // Corrige o bug do total de crianças no HTML
+            document.getElementById('totalChildren').textContent = totalChildren;
+            
+            return totalChildren > 0 ? Math.round(totalAge / totalChildren) : 0;
+        }
 
         function renderTeams() {
             const grid = document.getElementById('teamsGrid');
@@ -808,19 +936,14 @@
         }
 
         function updateStats() {
-            let totalChildren = 0;
-            let totalAge = 0;
-
-            for (const team of Object.values(teams)) {
-                totalChildren += team.children.length;
-                totalAge += team.children.reduce((sum, child) => sum + child.age, 0);
-            }
-
+            const totalChildren = Object.values(teams).reduce((sum, team) => sum + team.children.length, 0);
+            const avgAge = calculateAvgAge(teams);
+            
             document.getElementById('totalChildren').textContent = totalChildren;
-            document.getElementById('avgAge').textContent = Math.round(totalAge / totalChildren);
+            document.getElementById('avgAge').textContent = avgAge;
         }
 
-        function showTab(tabName) {
+        function showTab(event, tabName) {
             const tabs = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('.tab-button');
             
@@ -828,10 +951,26 @@
             buttons.forEach(button => button.classList.remove('active'));
             
             document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+            
+            // Certifica que o botão clicado se torne ativo
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Para a chamada inicial, ativa o primeiro botão
+                const firstButton = document.querySelector('.tab-button');
+                if (firstButton) firstButton.classList.add('active');
+            }
         }
 
-        renderTeams();
+        // Chama a função ao carregar para renderizar a primeira aba e as estatísticas
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTeams();
+            // Garante que a aba 'equipes' esteja ativa ao carregar
+            const initialTab = document.getElementById('equipes');
+            const initialButton = document.querySelector('.tab-button:first-child');
+            if (initialTab) initialTab.classList.add('active');
+            if (initialButton) initialButton.classList.add('active');
+        });
     </script>
 </body>
 </html>
